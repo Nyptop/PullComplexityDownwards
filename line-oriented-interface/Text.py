@@ -1,6 +1,6 @@
 class Text:
     def __init__(self):
-        self._text = ''
+        self._lines = []
 
     def __len__(self):
         return len(self._text)
@@ -14,5 +14,8 @@ class Text:
         else: # deleting from a position until the end
             self._text = self._text[:start]
 
-    def get_text(self):
-        return self._text
+    def get_lines(self):
+        return self._lines
+    
+    def save(self):
+        self.
