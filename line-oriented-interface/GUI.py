@@ -16,18 +16,31 @@ save_button = Button(screen, 100, 100, 100, 100, 'save')
 text = Text()
 
 cursor_position = 0
+line_length = 25 # this can be made redundant with better design
+
+# this is the file we're likely to work in more often, since we'll be making
+# frequent changes, so want to minimise complexity here  
 
 running = True
 while running:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            text.save()
             running = False
         if event.type == pygame.MOUSEBUTTONUP:
             save_button.handle_click(save, text)
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
-                text.insert('q', cursor_position)
+                current_line_index = cursor_position // line_length
+                cursor_index_in_line = cursor_position % line_length
+                if cursor_index_in_line == 0:
+                    current_line = 'q'
+                    text.append_line(current_line)
+                else:
+                    current_line = text.get_line(current_line_index)
+                    current_line += 'q'
+                    text.replace_line(current_line_index, current_line)
                 cursor_position += 1
             if event.key == pygame.K_w:
                 text.insert('w', cursor_position)
@@ -45,14 +58,12 @@ while running:
 
     screen.fill((255, 255, 255))
 
-    lines = [''] 
-    for char_number, char in enumerate(text.get_text()):
-        if char_number == cursor_position:
-            lines[-1] += ']' + char
-        else:
-            lines[-1] += char
-        if len(lines[-1]) > 30:
-            lines.append('')
+    current_line_index = cursor_position // line_length
+    cursor_index_in_line = cursor_position % line_length
+
+    text.add_cursor(current_line_index, cursor_index_in_line)
+
+    lines = text.get_lines()
 
     for line_number, line in enumerate(lines):
         textsurface = myfont.render(line, False, (0, 0, 0))
