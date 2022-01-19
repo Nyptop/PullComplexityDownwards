@@ -15,6 +15,8 @@
 
 # example of pulling complexity downwards, automatically calculate button size
 
+# post this on the code review forum, make sure I'm not doing anything too funky
+
 import pygame
 
 class Button:

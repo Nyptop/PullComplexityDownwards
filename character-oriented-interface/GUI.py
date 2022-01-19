@@ -40,14 +40,7 @@ while running:
 
     print(cursor_position)
 
-    lines = [''] 
-    for char_number, char in enumerate(text.get_text()):
-        if char_number == cursor_position:
-            lines[-1] += ']' + char
-        else:
-            lines[-1] += char
-        if len(lines[-1]) > 30:
-            lines.append('')
+    lines = text.get_lines(cursor_position)
 
     for line_number, line in enumerate(lines):
         textsurface = myfont.render(line, False, (0, 0, 0))
