@@ -4,7 +4,7 @@ from Text import Text
 
 def get_lines(raw_text, cursor_position, line_length=25):
     lines = [''] 
-    for char_number, char in enumerate(text.get_text()):
+    for char_number, char in enumerate(raw_text):
         if char_number == cursor_position:
             lines[-1] += ']' + char
         else:
@@ -49,17 +49,8 @@ while running:
 
     screen.fill((255, 255, 255))
 
-    # unavoidable complexity, organising raw text into lines to be displayed 
-    # by the editor. Question, whether it is better for it to be here, with the caller, 
-    # or whether it should be pulled down into the Text class?
-
-    # show equation of complexity, how often is it going to be used, modified.
-
-    # perhaps ignore gen purp for this video? (although get_lines is still nicely gen purp)
-
-    lines = get_lines(
-        raw_text = text.get_text(),
-        cursor_position = cursor_position,
+    lines = text.get_lines(
+        cursor_position=cursor_position
     )
 
     for line_number, line in enumerate(lines):
