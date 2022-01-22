@@ -2,17 +2,6 @@ import pygame
 
 from Text import Text
 
-def get_lines(raw_text, cursor_position, line_length=25):
-    lines = [''] 
-    for char_number, char in enumerate(raw_text):
-        if char_number == cursor_position:
-            lines[-1] += ']' + char
-        else:
-            lines[-1] += char
-        if len(lines[-1]) > line_length:
-            lines.append('')
-    return lines
-
 pygame.init()
 
 pygame.font.init()
