@@ -2,6 +2,17 @@ import pygame
 
 from Text import Text
 
+def get_lines(raw_text, cursor_position, line_length=25):
+    lines = [''] 
+    for char_number, char in enumerate(text.get_text()):
+        if char_number == cursor_position:
+            lines[-1] += ']' + char
+        else:
+            lines[-1] += char
+        if len(lines[-1]) > line_length:
+            lines.append('')
+    return lines
+
 pygame.init()
 
 pygame.font.init()
@@ -38,9 +49,15 @@ while running:
 
     screen.fill((255, 255, 255))
 
-    print(cursor_position)
+    # unavoidable complexity, organising raw text into lines to be displayed 
+    # by the editor. Question, whether it is better for it to be 
 
-    lines = text.get_lines(cursor_position)
+    # perhaps ignore gen purp for this video? (although get_lines is still nicely gen purp)
+
+    lines = get_lines(
+        raw_text = text.get_text(),
+        cursor_position = cursor_position,
+    )
 
     for line_number, line in enumerate(lines):
         textsurface = myfont.render(line, False, (0, 0, 0))
